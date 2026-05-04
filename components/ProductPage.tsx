@@ -1,135 +1,123 @@
 import Link from 'next/link'
 import { ShopButton } from '@/components/ShopButton'
 import { Product } from '@/lib/products'
-import { SERIF, SANS } from '@/lib/styles'
+import { TY } from '@/lib/styles'
 
-type Props = {
-  product: Product
-}
+type Props = { product: Product }
 
-const sectionLabel = (text: string) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '18px' }}>
-    <p style={{ fontFamily: SANS, fontSize: '10px', letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 500, color: '#D4AF37', whiteSpace: 'nowrap' }}>
-      {text}
-    </p>
-    <div style={{ flex: 1, height: '0.5px', background: '#D4AF37', opacity: 0.45 }} />
-  </div>
+const DetailLabel = ({ text }: { text: string }) => (
+  <p className="mb-2" style={{ ...TY.detailLabel }}>{text}</p>
 )
 
 export function ProductPage({ product }: Props) {
+  const imageTones = ['#ece9e3', '#e5e1d9', '#dedad2', '#d6d1c9']
   const steps = product.howToUse
     ? product.howToUse.split('. ').filter(s => s.trim()).map(s => s.endsWith('.') ? s : s + '.')
     : []
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'start' }}>
+    <div className="grid grid-cols-1 lg:grid-cols-2" style={{ alignItems: 'start' }}>
 
-      {/* ── LEFT — sticky image ── */}
-      <div
-        style={{ position: 'sticky', top: '76px', height: 'calc(100vh - 76px)', background: '#ece9e3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        aria-label={`${product.name} — image coming soon`}
-      >
-        <span style={{ fontFamily: SANS, fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 300, opacity: 0.3 }}>
-          image coming soon
-        </span>
+      {/* LEFT — stacked images (hidden on mobile, shown lg+) */}
+      <div className="hidden lg:block" style={{ borderRight: '0.5px solid rgba(0,0,0,0.07)' }}>
+        {imageTones.map((bg, i) => (
+          <div key={i}>
+            <div className="flex items-center justify-center" style={{ aspectRatio: '4/5', background: bg }}
+              aria-label={`${product.name} — image ${i + 1} coming soon`}>
+              <span style={{ ...TY.sectionLabel, fontSize: '8px' }}>
+                {i === 0 ? 'product image' : `image ${i + 1}`}
+              </span>
+            </div>
+            {i < imageTones.length - 1 && <div style={{ height: '0.5px', background: 'rgba(0,0,0,0.06)' }} />}
+          </div>
+        ))}
       </div>
 
-      {/* ── RIGHT — continuous scroll ── */}
-      <div>
+      {/* Mobile image — single placeholder shown on small screens */}
+      <div className="lg:hidden flex items-center justify-center" style={{ aspectRatio: '4/5', background: imageTones[0] }}>
+        <span style={{ ...TY.sectionLabel, fontSize: '8px' }}>product image</span>
+      </div>
 
-        {/* Section 1 — identity */}
-        <div style={{ padding: '72px 64px 64px 56px', borderBottom: '0.5px solid rgba(212,175,55,0.25)' }}>
-          <Link
-            href="/products"
-            className="hover:opacity-60 transition-opacity duration-200"
-            style={{ fontFamily: SANS, fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 400, color: '#D4AF37', opacity: 0.65, marginBottom: '48px', display: 'block' }}
-          >
-            ← all products
-          </Link>
+      {/* RIGHT — info panel (sticky on desktop, normal flow on mobile) */}
+      <div className="hide-scrollbar px-6 md:px-14 py-8 md:py-10 flex flex-col gap-4"
+        style={{ position: 'sticky', top: '68px', maxHeight: 'calc(100vh - 68px)', overflowY: 'auto' }}>
 
-          <span style={{ fontFamily: SANS, fontSize: '11px', letterSpacing: '0.2em', fontWeight: 400, color: '#D4AF37', display: 'block', marginBottom: '12px' }}>
-            {product.size}
-          </span>
+        {/* Back link */}
+        <Link href="/products" className="hover:opacity-60 transition-opacity duration-200"
+          style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.35 }}>
+          ← all products
+        </Link>
 
-          <h1 style={{ fontFamily: SANS, fontSize: '28px', letterSpacing: '0.24em', fontWeight: 500, lineHeight: 1.15, color: '#181816', marginBottom: '22px' }}>
+        {/* Product name + size */}
+        <div>
+          <h1 className="mb-1" style={{ ...TY.productTitle, fontSize: 'clamp(22px,3vw,30px)', letterSpacing: '0.22em', lineHeight: 1.1 }}>
             {product.name}
           </h1>
-
-          <div style={{ width: '40px', height: '0.5px', background: '#D4AF37', marginBottom: '26px' }} />
-
-          <p style={{ fontFamily: SERIF, fontSize: '18px', fontWeight: 600, fontStyle: 'italic', lineHeight: 1.9, color: '#181816', opacity: 0.85, marginBottom: '40px' }}>
-            {product.longDescription}
-          </p>
-
-          <div style={{ textAlign: 'center' }}>
-            {product.shopUrl ? (
-              <ShopButton href={product.shopUrl} label="shop on love & natural" />
-            ) : (
-              <div>
-                <p style={{ fontFamily: SANS, fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 400, color: '#9A9A9A', marginBottom: '12px' }}>
-                  available in store
-                </p>
-                <Link
-                  href="/contact-us"
-                  className="hover:opacity-80 transition-opacity duration-200"
-                  style={{ fontFamily: SANS, fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 400, color: '#181816', opacity: 0.6, borderBottom: '0.5px solid rgba(0,0,0,0.25)', paddingBottom: '2px' }}
-                >
-                  contact us to order
-                </Link>
-              </div>
-            )}
-          </div>
+          <span style={{ ...TY.sectionLabel, fontSize: '9px', color: '#D4AF37', opacity: 0.85 }}>
+            {product.size}
+          </span>
         </div>
 
-        {/* Section 2 — details */}
-        <div style={{ padding: '56px 64px 80px 56px' }}>
+        <div style={{ height: '0.5px', background: '#D4AF37', opacity: 0.28 }} />
 
-          {/* Key ingredients — dot-joined inline list */}
+        {/* Description */}
+        <p style={{ ...TY.body, fontSize: 'clamp(14px,1.5vw,15px)', lineHeight: 1.92, opacity: 0.6 }}>
+          {product.longDescription}
+        </p>
+
+        {/* CTA */}
+        {product.shopUrl ? (
+          <ShopButton href={product.shopUrl} label="shop on love & natural" />
+        ) : (
+          <div>
+            <p className="mb-2" style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.3 }}>available in store</p>
+            <Link href="/contact-us" className="hover:opacity-70 transition-opacity duration-200"
+              style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.5, borderBottom: '0.5px solid rgba(0,0,0,0.25)', paddingBottom: '2px' }}>
+              contact us to order
+            </Link>
+          </div>
+        )}
+
+        <div style={{ height: '0.5px', background: 'rgba(0,0,0,0.07)' }} />
+
+        {/* Details */}
+        <div className="flex flex-col gap-5">
           {product.ingredients && (
-            <div style={{ marginBottom: '40px' }}>
-              {sectionLabel('key ingredients')}
-              <p style={{ fontFamily: SERIF, fontSize: '17px', fontWeight: 600, fontStyle: 'italic', lineHeight: 1.75, color: '#181816', opacity: 0.82 }}>
-                {product.ingredients.join(' · ')}
+            <div>
+              <DetailLabel text="key ingredients" />
+              <p style={{ ...TY.body, fontSize: '14px', lineHeight: 1.7 }}>
+                {product.ingredients.map((ing, i) => (
+                  <span key={ing}>{i > 0 && <span style={{ opacity: 0.4, margin: '0 6px' }}>·</span>}{ing}</span>
+                ))}
               </p>
             </div>
           )}
-
-          {/* Suitable for — inline text with gold circle separators */}
           {product.skinTypes && (
-            <div style={{ marginBottom: '40px' }}>
-              {sectionLabel('suitable for')}
-              <p style={{ fontFamily: SERIF, fontSize: '17px', fontWeight: 600, fontStyle: 'italic', lineHeight: 1.75, color: '#181816', opacity: 0.82 }}>
+            <div>
+              <DetailLabel text="suitable for" />
+              <p style={{ ...TY.body, fontSize: '14px', lineHeight: 1.7 }}>
                 {product.skinTypes.map((type, i) => (
                   <span key={type}>
-                    {i > 0 && (
-                      <span style={{ color: '#D4AF37', fontSize: '9px', margin: '0 10px', verticalAlign: 'middle' }}>●</span>
-                    )}
+                    {i > 0 && <span style={{ color: '#D4AF37', fontSize: '9px', margin: '0 10px', verticalAlign: 'middle' }}>●</span>}
                     {type}
                   </span>
                 ))}
               </p>
             </div>
           )}
-
-          {/* How to use — numbered steps */}
           {steps.length > 0 && (
             <div>
-              {sectionLabel('how to use')}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <DetailLabel text="how to use" />
+              <div className="flex flex-col gap-2">
                 {steps.map((step, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: '32px 1fr', gap: '12px', alignItems: 'baseline' }}>
-                    <span style={{ fontFamily: SANS, fontSize: '11px', letterSpacing: '0.08em', fontWeight: 500, color: '#D4AF37' }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <p style={{ fontFamily: SERIF, fontSize: '17px', fontWeight: 600, fontStyle: 'italic', lineHeight: 1.65, color: '#181816', opacity: 0.82 }}>
-                      {step}
-                    </p>
-                  </div>
+                  <p key={i} style={{ ...TY.body, fontSize: '14px', lineHeight: 1.65 }}>
+                    <span style={{ color: '#D4AF37', marginRight: '12px', fontStyle: 'normal', fontWeight: 400 }}>—</span>
+                    {step}
+                  </p>
                 ))}
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>

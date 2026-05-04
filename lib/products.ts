@@ -9,7 +9,8 @@ export type Product = {
   ingredients?: string[]
   skinTypes?: string[]
   howToUse?: string
-  shopUrl?: string // undefined = no CTA (essential oils)
+  shopUrl?: string
+  images?: string[]
 }
 
 export const products: Product[] = [
@@ -27,6 +28,7 @@ export const products: Product[] = [
     skinTypes: ['all skin types', 'dry skin', 'sensitive skin'],
     howToUse: 'lather with warm water and apply to skin. rinse thoroughly. suitable for daily use.',
     shopUrl: 'https://loveandnatural.com/collections/esenti',
+    images: ['/soap-2.png', '/soap-1.png'],
   },
   {
     id: 'custom-face-oil',
@@ -42,6 +44,7 @@ export const products: Product[] = [
     skinTypes: ['oily', 'dry', 'combination', 'sensitive', 'mature'],
     howToUse: 'apply 3–5 drops to clean skin morning and evening. gently press into face and neck.',
     shopUrl: 'https://loveandnatural.com/pages/custom-facial-oil',
+    images: ['/faceoil-3.png', '/faceoil.png', '/faceoil-2.png'],
   },
   {
     id: 'luminere-eye-oil',
@@ -57,6 +60,7 @@ export const products: Product[] = [
     skinTypes: ['all skin types', 'mature skin', 'sensitive skin'],
     howToUse: 'apply 1–2 drops under the eye area using your ring finger. gently pat — do not rub. use morning and evening.',
     shopUrl: 'https://loveandnatural.com/collections/esenti',
+    images: ['/eyeoil-1.png', '/eyeoil-2.png', '/eyeoil-3.png'],
   },
   {
     id: 'essential-oil',
@@ -71,6 +75,7 @@ export const products: Product[] = [
     ingredients: ['lavender', 'peppermint', 'tea tree', 'orange', 'grapefruit', 'lemongrass'],
     howToUse: 'add a few drops to a diffuser, or dilute with a carrier oil before applying to skin. do not apply undiluted essential oils directly to skin.',
     shopUrl: undefined, // not available on loveandnatural yet
+    images: ['/love&natural.png'],
   },
   {
     id: 'body-mist',
@@ -86,6 +91,7 @@ export const products: Product[] = [
     skinTypes: ['all skin types'],
     howToUse: 'shake well before use. spray onto skin from 15–20cm away. can be used throughout the day.',
     shopUrl: 'https://loveandnatural.com/collections/esenti',
+    images: ['/bodymist-2.png', '/bodymist.png'],
   },
 ]
 

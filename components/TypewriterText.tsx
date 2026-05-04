@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, CSSProperties } from 'react'
+import { useEffect, useState, CSSProperties } from 'react'
 
 type Props = {
   text: string
@@ -8,52 +8,51 @@ type Props = {
   className?: string
 }
 
+// Renders text with a staggered word-fade-in (replaces character-by-character typing)
 export function TypewriterText({ text, style, className }: Props) {
-  const [displayed, setDisplayed] = useState('')
-  const [cursorVisible, setCursorVisible] = useState(true)
-  const [done, setDone] = useState(false)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    let i = 0
-    const delay = setTimeout(() => {
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          setDisplayed(text.slice(0, i + 1))
-          i++
-        } else {
-          clearInterval(interval)
-          // fade cursor out after a beat
-          setTimeout(() => setDone(true), 800)
-        }
-      }, 38)
-      return () => clearInterval(interval)
-    }, 500)
-    return () => clearTimeout(delay)
+    setVisible(false)
+    const t = setTimeout(() => setVisible(true), 500)
+    return () => clearTimeout(t)
   }, [text])
 
-  // blink cursor while typing
-  useEffect(() => {
-    if (done) { setCursorVisible(false); return }
-    const blink = setInterval(() => setCursorVisible(v => !v), 530)
-    return () => clearInterval(blink)
-  }, [done])
+  // Build flat token list: words and line-breaks
+  type Token =
+    | { kind: 'word';  text: string; index: number }
+    | { kind: 'break'; index: number }
+
+  const tokens: Token[] = []
+  let n = 0
+
+  text.split('\n').forEach((line, li) => {
+    if (li > 0) tokens.push({ kind: 'break', index: n++ })
+    line.split(' ').filter(w => w.length > 0).forEach(word => {
+      tokens.push({ kind: 'word', text: word, index: n++ })
+    })
+  })
 
   return (
-    <span className={className} style={style}>
-      {displayed}
-      <span
-        aria-hidden
-        style={{
-          display: 'inline-block',
-          width: '1.5px',
-          height: '0.85em',
-          background: 'currentColor',
-          marginLeft: '3px',
-          verticalAlign: 'text-bottom',
-          opacity: done ? 0 : cursorVisible ? 0.7 : 0,
-          transition: done ? 'opacity 0.6s ease' : 'none',
-        }}
-      />
+    <span className={className} style={{ display: 'block', ...style }}>
+      {tokens.map((tok, i) => {
+        if (tok.kind === 'break') return <br key={i} />
+        const delay = tok.index * 0.07
+        return (
+          <span
+            key={i}
+            style={{
+              display: 'inline-block',
+              marginRight: '0.28em',
+              opacity:   visible ? 1 : 0,
+              transform: visible ? 'translateY(0)' : 'translateY(6px)',
+              transition: `opacity 0.65s ease ${delay}s, transform 0.65s ease ${delay}s`,
+            }}
+          >
+            {tok.text}
+          </span>
+        )
+      })}
     </span>
   )
 }

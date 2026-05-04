@@ -11,16 +11,14 @@ export function ShopButton({ href, label = 'shop this product' }: Props) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-block shop-btn"
+      className="inline-flex items-center 
+      uppercase font-medium text-[11px] 
+      tracking-[0.18em]  border-[#D4AF37] 
+      opacity-90
+      bg-[#D4AF37] text-white px-3 py-3
+       hover:text-black hover:bg-[#B8960C] transition-all duration-200 whitespace-nowrap w-auto max-w-max"
       style={{
         fontFamily: SANS,
-        fontSize: '10px',
-        letterSpacing: '0.18em',
-        textTransform: 'uppercase',
-        fontWeight: 300,
-        border: '0.5px solid #B8960C',
-        color: '#B8960C',
-        padding: '7px 18px',
       }}
     >
       {label}

@@ -1,145 +1,87 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { FullLogo } from '@/components/FullLogo'
 import { TypewriterText } from '@/components/TypewriterText'
-import { products, testimonials } from '@/lib/products'
-import { SERIF, SANS } from '@/lib/styles'
+import { ProductCarousel } from '@/components/ProductCarousel'
+import { testimonials } from '@/lib/products'
+import { TY } from '@/lib/styles'
 
 export const metadata: Metadata = {
   title: 'esenti — the art of blending',
   description:
-    'Hand-crafted organic skincare made to order in Steveston Village, BC. Custom face oils, handmade soaps, essential oils and more — available at loveandnatural.com.',
-}
-
-function SectionHeader({ title, description }: { title: string; description?: string }) {
-  return (
-    <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-      <h2 style={{ fontFamily: SERIF, fontSize: '44px', fontWeight: 400, letterSpacing: '0.06em', color: '#D4AF37', marginBottom: description ? '12px' : '24px' }}>
-        {title}
-      </h2>
-      {description && (
-        <p style={{ fontFamily: SERIF, fontSize: '18px', fontWeight: 600, fontStyle: 'italic', color: '#A8A8A8' }}>
-          {description}
-        </p>
-      )}
-    </div>
-  )
+    'Hand-crafted organic skincare made to order in Steveston Village, BC. Custom face oils, hand-made soaps, essential oils and more — available at loveandnatural.com.',
 }
 
 export default function Home() {
   return (
     <>
       {/* ── Hero ── */}
-      <section
-        className="px-16 text-center h-screen snap-start flex flex-col justify-center items-center"
-        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}
-      >
-        <div className="flex justify-center mb-10">
-          <FullLogo width={300} />
+      <section className="text-center flex flex-col items-center justify-center px-6 md:px-16 py-20 md:py-24"
+        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)', minHeight: '60vh' }}>
+        <div id="hero-logo" className="flex justify-center mb-6">
+          <FullLogo width={280} className="w-50 sm:w-70 md:w-85 lg:w-100" />
         </div>
-        <p
-          className="mx-auto mb-8"
-          style={{ fontFamily: SERIF, fontSize: '22px', fontWeight: 600, fontStyle: 'italic', lineHeight: 1.8, maxWidth: '480px', color: '#181816', opacity: 0.82 }}
-        >
-          handcrafted skincare made with synergistic blends of organic &amp; natural ingredients.
-        </p>
-        <a
-          href="/products"
-          className="inline-block hover:opacity-70 transition-opacity duration-200"
-          style={{ fontFamily: SANS, fontSize: '12px', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 500, color: '#D4AF37', paddingBottom: '4px', borderBottom: '0.5px solid #D4AF37' }}
-        >
-          explore the collection
+        <div className="min-h-18 mb-9 flex items-start justify-center">
+          <TypewriterText
+            text={`handcrafted skincare made with synergistic blends of\norganic & natural ingredients.`}
+            className="mx-auto"
+            style={{ ...TY.body, fontSize: 'clamp(14px,2vw,16px)', lineHeight: 1.9, maxWidth: '420px', opacity: 0.55, textAlign: 'center' }}
+          />
+        </div>
+        <a href="/products" className="inline-block hover:opacity-70 transition-opacity duration-200"
+          style={{ ...TY.sectionLabel, fontSize: '9.5px', letterSpacing: '0.24em', opacity: 0.4, paddingBottom: '2px', borderBottom: '0.5px solid rgba(0,0,0,0.22)' }}>
+          explore our products
         </a>
       </section>
 
-      {/* ── Products ── */}
-      <section
-        id="products"
-        className="px-16 h-screen snap-start flex flex-col justify-center"
-        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}
-      >
-        <SectionHeader title="our products" />
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }}>
-          {products.map((product) => (
-            <Link key={product.id} href={`/products/${product.slug}`} className="group block text-center">
-              <div
-                className="flex items-center justify-center mb-4"
-                style={{ background: '#ece9e3', aspectRatio: '3/4' }}
-                aria-label={`${product.name} — image coming soon`}
-              >
-                <span style={{ fontFamily: SANS, fontSize: '8px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 300, opacity: 0.4 }}>
-                  coming soon
-                </span>
-              </div>
-              <h3
-                className="group-hover:opacity-50 transition-opacity duration-200"
-                style={{ fontFamily: SANS, fontSize: '16px', letterSpacing: '0.27em', fontWeight: 300, lineHeight: 1.2, color: '#181816' }}
-              >
-                {product.name}
-              </h3>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* ── Product strip ── */}
+      <ProductCarousel />
 
       {/* ── Testimonials ── */}
-      <section
-        className="px-16 h-screen snap-start flex flex-col justify-center items-center"
-        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}
-      >
-        <SectionHeader
-          title="what our customers say"
-        />
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '40px', width: '100%' }}>
+      <section className="px-6 md:px-16 py-16 md:py-24"
+        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}>
+        <h2 className="mb-10 md:mb-12" style={{ ...TY.pageHeading, fontSize: 'clamp(24px,4vw,36px)' }}>
+          what people say
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0">
           {testimonials.map((t, i) => (
-            <div key={i} className="flex flex-col items-center text-center" style={{ gap: '16px' }}>
-              <div style={{ width: '40px', height: '1px', background: '#D4AF37', opacity: 0.7 }} />
-              <p style={{ fontFamily: SERIF, fontSize: '21px', fontWeight: 600, fontStyle: 'italic', lineHeight: 1.8, color: '#181816', opacity: 0.9 }}>
-                {t.quote}
-              </p>
-              <span style={{ fontFamily: SANS, fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500, color: '#181816', opacity: 0.45 }}>
-                {t.name}
-              </span>
+            <div key={i} className="md:px-10 first:md:pl-0 last:md:pr-0"
+              style={{ borderLeft: i > 0 ? '0.5px solid rgba(212,175,55,0.25)' : 'none' }}>
+              <p className="mb-5" style={{ ...TY.body, fontSize: 'clamp(14px,1.5vw,15px)' }}>{t.quote}</p>
+              <span style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.32 }}>{t.name}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── Our Approach ── */}
-      <section
-        className="px-16 h-screen snap-start flex flex-col justify-center items-center text-center"
-        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}
-      >
-        <SectionHeader
-          title="our approach"
-        />
-        <p style={{ fontFamily: SERIF, fontSize: '24px', fontWeight: 600, lineHeight: 1.8, color: '#181816', opacity: 0.88, maxWidth: '780px' }}>
-          we believe skincare should be as individual as the person wearing it. at esenti, every product is made by hand in Steveston Village, BC —{' '}
-          <em>blended only when you order</em>, so the ingredients arrive at their most potent. no shelf-sitting. no compromise.
+      <section className="px-6 md:px-16 py-16 md:py-24 text-center"
+        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}>
+        <h2 className="mb-8 md:mb-10" style={{ ...TY.pageHeading, fontSize: 'clamp(24px,4vw,36px)' }}>
+          our approach
+        </h2>
+        <p className="mx-auto" style={{ ...TY.body, fontSize: 'clamp(18px,2.5vw,26px)', lineHeight: 1.7, maxWidth: '640px', opacity: 0.72 }}>
+          &ldquo;we believe skincare should be as individual as the person wearing it — blended only when you order, so the ingredients arrive at their most potent.&rdquo;
         </p>
+        <div className="mt-8" style={{ ...TY.sectionLabel, color: '#D4AF37', opacity: 0.7 }}>
+          esenti · Steveston Village, BC
+        </div>
       </section>
 
       {/* ── Shop CTA ── */}
-      <section
-        className="px-16 h-screen snap-start flex flex-col justify-center items-center text-center"
-        style={{ gap: '28px' }}
-      >
-        <p style={{ fontFamily: SERIF, fontSize: '36px', fontWeight: 400, fontStyle: 'italic', lineHeight: 1.45, color: '#181816', opacity: 0.88 }}>
-          available exclusively through
-          <br />
-          <span style={{ color: '#D4AF37' }}>Love &amp; Natural.</span>
-        </p>
-        <span style={{ fontFamily: SANS, fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 400, color: '#181816', opacity: 0.35 }}>
-          loveandnatural.com
-        </span>
-        <a
-          href="https://loveandnatural.com/collections/esenti"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shop-btn"
-          style={{ fontFamily: SANS, fontSize: '12px', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 500, border: '0.5px solid #B8960C', color: '#B8960C', padding: '12px 32px' }}
-        >
+      <section className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 px-6 md:px-16 py-14 md:py-20"
+        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)', borderTop: '0.5px solid rgba(212,175,55,0.15)' }}>
+        {/* Left — brand + url */}
+        <div className="flex flex-col gap-2">
+          <span style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.35 }}>where to shop</span>
+          <p style={{ ...TY.pageHeading, fontSize: 'clamp(36px,6vw,72px)', lineHeight: 1.05, color: '#D4AF37' }}>
+            Love &amp; Natural.
+          </p>
+          <span style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.28 }}>loveandnatural.com</span>
+        </div>
+        {/* Right — button */}
+        <a href="https://loveandnatural.com/collections/esenti" target="_blank" rel="noopener noreferrer"
+          className="shop-btn shrink-0"
+          style={{ ...TY.sectionLabel, fontSize: '11px', letterSpacing: '0.18em', fontWeight: 500, border: '0.5px solid #B8960C', color: '#B8960C', padding: '12px 32px' }}>
           shop the collection
         </a>
       </section>
