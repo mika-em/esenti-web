@@ -1,56 +1,53 @@
 import Link from 'next/link'
-import { WordmarkLogo } from './WordmarkLogo'
-import { SANS, SERIF } from '@/lib/styles'
-
-const footerLinks = [
-  { href: '/contact-us', label: 'contact us' },
-]
+import { TY, SANS } from '@/lib/styles'
+import { navLinks } from '@/lib/products'
 
 export function Footer() {
   return (
-    <footer
-      className="flex items-center justify-between px-16 py-8"      style={{ borderTop: '0.5px solid rgba(212,175,55,0.35)', backgroundColor: 'rgba(212, 175, 55, 0.8)' }}
-    >
+    <footer style={{ borderTop: '0.5px solid rgba(212,175,55,0.35)' }}>
 
-      <WordmarkLogo width={56} style={{ opacity: 1 }} />
+      {/* Main row */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 px-6 md:px-16 py-10 md:py-12">
 
-      <div className="flex items-center gap-8">
-        {footerLinks.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className="hover:opacity-70 transition-opacity duration-200"
-            style={{
-              fontFamily: SERIF,
-              fontSize: '17px',
-              letterSpacing: '0.12em',
-              textTransform: 'lowercase',
-              fontWeight: 600,
-              color: '#181816',
-              opacity: 0.5,
-            }}
-          >
-            {label}
-          </Link>
-        ))}
+        {/* Brand */}
+        <div className="flex flex-col gap-1">
+          <span style={{ ...TY.pageHeading, fontSize: '18px', letterSpacing: '0.12em' }}>esenti</span>
+          <span style={{ ...TY.sectionLabel, fontSize: '8px', opacity: 0.35 }}>steveston village, bc</span>
+        </div>
+
+        {/* Nav links */}
+        <nav className="flex flex-wrap gap-6 md:gap-8">
+          {navLinks.map(({ href, label }) => (
+            <Link key={href} href={href}
+              className="hover:opacity-100 transition-opacity duration-200"
+              style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.45 }}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Social */}
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+          className="hover:opacity-100 transition-opacity duration-200 self-start md:self-auto"
+          style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.45 }}>
+          instagram
+        </a>
+
       </div>
 
-      {/* <p
-        className="flex items-center gap-1"
-        style={{
-          fontFamily: SANS,
-          fontSize: '12px',
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-          fontWeight: 400,
-          color: '#181816',
-          opacity: 0.4,
-        }}
-      >
-        © {new Date().getFullYear()}{' '}
-        <WordmarkLogo width={38} style={{ display: 'inline-block', verticalAlign: 'middle', marginBottom: '1px' }} />
-        {' '}skincare · Steveston Village, BC
-      </p> */}
+      {/* Bottom rule + copyright */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-6 md:px-16 pb-8"
+        style={{ borderTop: '0.5px solid rgba(0,0,0,0.06)', paddingTop: '20px' }}>
+        <p style={{ fontFamily: SANS, fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase' as const, color: '#181816', opacity: 0.28 }}>
+          © {new Date().getFullYear()} esenti skincare
+        </p>
+        <Link href="/contact-us"
+          className="hover:opacity-60 transition-opacity duration-200"
+          style={{ fontFamily: SANS, fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase' as const, color: '#181816', opacity: 0.28 }}>
+          privacy &amp; contact
+        </Link>
+      </div>
+
     </footer>
   )
 }

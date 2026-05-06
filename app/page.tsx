@@ -53,36 +53,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Our Approach ── */}
-      <section className="px-6 md:px-16 py-16 md:py-24 text-center"
-        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}>
-        <h2 className="mb-8 md:mb-10" style={{ ...TY.pageHeading, fontSize: 'clamp(24px,4vw,36px)' }}>
-          our approach
-        </h2>
-        <p className="mx-auto" style={{ ...TY.body, fontSize: 'clamp(18px,2.5vw,26px)', lineHeight: 1.7, maxWidth: '640px', opacity: 0.72 }}>
-          &ldquo;we believe skincare should be as individual as the person wearing it — blended only when you order, so the ingredients arrive at their most potent.&rdquo;
-        </p>
-        <div className="mt-8" style={{ ...TY.sectionLabel, color: '#D4AF37', opacity: 0.7 }}>
-          esenti · Steveston Village, BC
-        </div>
-      </section>
-
       {/* ── Shop CTA ── */}
-      <section className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 px-6 md:px-16 py-14 md:py-20"
-        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)', borderTop: '0.5px solid rgba(212,175,55,0.15)' }}>
-        {/* Left — brand + url */}
-        <div className="flex flex-col gap-2">
-          <span style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.35 }}>where to shop</span>
-          <p style={{ ...TY.pageHeading, fontSize: 'clamp(36px,6vw,72px)', lineHeight: 1.05, color: '#D4AF37' }}>
-            Love &amp; Natural.
-          </p>
-          <span style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.28 }}>loveandnatural.com</span>
-        </div>
-        {/* Right — button */}
+      <section className="flex flex-col items-center justify-center text-center px-6 md:px-16 py-20 md:py-28"
+        style={{ borderBottom: '0.5px solid rgba(212,175,55,0.3)' }}>
+        <span className="mb-6" style={{ ...TY.sectionLabel, fontSize: '9px', opacity: 0.35 }}>exclusively available at</span>
+        <p className="mb-10" style={{ ...TY.pageHeading, fontSize: 'clamp(40px,7vw,80px)', lineHeight: 1.0, color: '#D4AF37' }}>
+          Love &amp; Natural.
+        </p>
         <a href="https://loveandnatural.com/collections/esenti" target="_blank" rel="noopener noreferrer"
-          className="shop-btn shrink-0"
-          style={{ ...TY.sectionLabel, fontSize: '11px', letterSpacing: '0.18em', fontWeight: 500, border: '0.5px solid #B8960C', color: '#B8960C', padding: '12px 32px' }}>
-          shop the collection
+          className="shop-btn"
+          style={{ ...TY.sectionLabel, fontSize: '11px', letterSpacing: '0.18em', fontWeight: 500, border: '0.5px solid #B8960C', color: '#B8960C', padding: '14px 40px' }}>
+          shop our products
         </a>
       </section>
     </>
