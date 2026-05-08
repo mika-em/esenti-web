@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { products } from '@/lib/products'
 import { TY } from '@/lib/styles'
 
@@ -36,9 +37,19 @@ export function ProductCarousel() {
           >
             {/* Image */}
             <div className="relative" style={{ aspectRatio: '4/5', background: imageTones[i], overflow: 'hidden' }}>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span style={{ ...TY.sectionLabel, fontSize: '7px' }}>coming soon</span>
-              </div>
+              {product.images?.[0] ? (
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span style={{ ...TY.sectionLabel, fontSize: '7px' }}>coming soon</span>
+                </div>
+              )}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ background: 'rgba(212,175,55,0.16)' }} />
             </div>

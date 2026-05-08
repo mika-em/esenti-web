@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { products } from '@/lib/products'
 import { TY } from '@/lib/styles'
 
@@ -14,9 +15,21 @@ function ProductCell({ product, bg, wide = false }: { product: (typeof products)
   return (
     <Link href={`/products/${product.slug}`} className="group block"
       style={{ gridColumn: wide ? 'span 2' : 'span 1', background: 'var(--background)', textDecoration: 'none', color: 'inherit' }}>
-      <div className="flex items-center justify-center"
+      <div className="relative overflow-hidden"
         style={{ aspectRatio: wide ? '5/2' : '3/2', background: bg }}>
-        <span style={{ ...TY.sectionLabel, fontSize: '7px' }}>coming soon</span>
+        {product.images?.[0] ? (
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            style={{ objectFit: 'cover' }}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span style={{ ...TY.sectionLabel, fontSize: '7px' }}>coming soon</span>
+          </div>
+        )}
       </div>
       <div className="flex justify-between items-end p-5 md:p-7">
         <div className="flex-1 min-w-0 pr-4">
