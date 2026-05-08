@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { WordmarkLogo } from './WordmarkLogo'
+import { FullLogo } from './FullLogo'
 import { TY, SANS } from '@/lib/styles'
 import { navLinks } from '@/lib/products'
 
@@ -11,7 +11,7 @@ export function Footer() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 px-6 md:px-16 py-10 md:py-12">
 
         {/* Logo */}
-        <WordmarkLogo width={72} style={{ opacity: 0.7 }} />
+        <FullLogo width={120} className="opacity-80" />
 
         {/* Nav links */}
         <nav className="flex flex-wrap gap-6 md:gap-8">
