@@ -75,7 +75,7 @@ export const products: Product[] = [
     ingredients: ['lavender', 'peppermint', 'tea tree', 'orange', 'grapefruit', 'lemongrass'],
     howToUse: 'add a few drops to a diffuser, or dilute with a carrier oil before applying to skin. do not apply undiluted essential oils directly to skin.',
     shopUrl: undefined, // not available on loveandnatural yet
-    images: ['/love&natural.png'],
+    images: ['/love-and-natural.png'],
   },
   {
     id: 'body-mist',
